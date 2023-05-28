@@ -1,3 +1,5 @@
+package org.tutorial;
+
 import org.apache.zookeeper.KeeperException;
 
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class DummyProcess {
 
         DistributedLock.setZooKeeperURL(ZOOKEEPER_URL);
         if (args.length < 1) {
-            System.out.println("Usage DummyProcess <Lock Name to Acquire");
+            System.out.println("Usage org.tutorial.DummyProcess <Lock Name to Acquire");
             System.exit(1);
         }
 
