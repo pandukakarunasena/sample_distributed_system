@@ -9,7 +9,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.assignment</groupId>
     <artifactId>synchronization-lock</artifactId>
 
     <properties>
@@ -38,7 +37,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>DummyProcess</mainClass>
+                            <mainClass>org.tutorial.DummyProcess</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
