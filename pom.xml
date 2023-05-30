@@ -13,6 +13,8 @@
   <modules>
     <module>client</module>
     <module>server</module>
+    <module>synchronization-lock</module>
+    <module>name-service-client</module>
   </modules>
 
 </project>
