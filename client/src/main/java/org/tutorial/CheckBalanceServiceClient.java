@@ -3,7 +3,7 @@ package org.tutorial;
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.bank.service.BalanceServiceGrpc;
+import org.bank.service.CheckBalanceServiceGrpc;
 import org.bank.service.CheckBalanceRequest;
 import org.bank.service.CheckBalanceResponse;
 
@@ -14,23 +14,33 @@ public class CheckBalanceServiceClient {
 
     public static final String NAME_SERVICE_ADDRESS = "http://localhost:2379";
     private ManagedChannel channel = null;
-    BalanceServiceGrpc.BalanceServiceBlockingStub clientStub = null;
+    CheckBalanceServiceGrpc.CheckBalanceServiceBlockingStub clientStub = null;
     String host = null;
     int port = -1;
 
     public static void main(String[] args) throws InterruptedException {
-        String host = null;
-        int port = -1;
-        if (args.length != 2) {
-            System.out.println("Usage CheckBalanceServiceClient <host> <port>");
+
+        String host = args[0];
+        int port = Integer.parseInt(args[1].trim());
+        String operation = args[2];
+
+        if (args.length != 3) {
+            System.out.println("Usage CheckBalanceServiceClient <host> <port> <s(et)|c(heck)");
             System.exit(1);
         }
-        host = args[0];
-        port = Integer.parseInt(args[1].trim());
-        CheckBalanceServiceClient client = new CheckBalanceServiceClient(host, port);
-        client.initializeConnection();
-        client.processUserRequests();
-        client.closeConnection();
+
+        if ("s".equals(operation)) {
+            SetBalanceServiceClient client = new SetBalanceServiceClient(host, port);
+            client.initializeConnection();
+            client.processUserRequests();
+            client.closeConnection();
+        } else {
+            CheckBalanceServiceClient client = new CheckBalanceServiceClient(host, port);
+            client.initializeConnection();
+            client.processUserRequests();
+            client.closeConnection();
+        }
+
     }
     public CheckBalanceServiceClient (String host, int port) {
         this.host = host;
@@ -58,7 +68,7 @@ public class CheckBalanceServiceClient {
     private void initializeConnection () {
         System.out.println("Initializing Connecting to server at " + host + ":" + port);
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
-        clientStub = BalanceServiceGrpc.newBlockingStub(channel);
+        clientStub = CheckBalanceServiceGrpc.newBlockingStub(channel);
 
         // Use ETCD name server to find the service
         channel.getState(true);
