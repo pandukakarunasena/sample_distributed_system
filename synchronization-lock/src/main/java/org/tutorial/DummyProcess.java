@@ -25,7 +25,7 @@ public class DummyProcess {
 
         DistributedLock lock = null;
         try {
-            lock = new DistributedLock(lockName);
+            lock = new DistributedLock(lockName, "");
             lock.acquireLock();
             System.out.println("I got the lock at " + getCurrentTimeStamp());
             accessSharedResources();
